@@ -125,42 +125,6 @@ p {
   position: relative;
   width: 800px;
   margin: auto;
-
-  // when mic is active add a gradient border
-  .micActive {
-    &:after {
-      content: '';
-      position: absolute;
-      top: calc(-1 * $borderWidth);
-      left: calc(-1 * $borderWidth);
-      height: calc(100% + $borderWidth * 2);
-      width: calc(100% + $borderWidth * 2);
-      background: linear-gradient(
-        60deg,
-        #c633f7,
-        #f37055,
-        #ef4e7b,
-        #a166ab,
-        #5073b8,
-        #1098ad,
-        #07b39b,
-        #6fba82
-      );
-      border-radius: 10px;
-      z-index: -1;
-      background-size: 400% 400%;
-      filter:blur(10px);
-      -webkit-backdrop-filter: blur(5px); /*fixes blur for Safari*/
-    }
-  }
-
-  // when user is talking add a gradient animation
-  .isTalking {
-    &:after {
-      animation: animatedgradient 3s ease alternate infinite;
-    }
-  }
-
   // input to take in the transcript
   input {
     position: relative;
@@ -194,6 +158,41 @@ p {
       background-color: $green;
       transition: 0.5s all ease-in-out;
     }
+  }
+}
+
+// when mic is active add a gradient border
+.micActive {
+  &:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * $borderWidth);
+    left: calc(-1 * $borderWidth);
+    height: calc(100% + $borderWidth * 2);
+    width: calc(100% + $borderWidth * 2);
+    background: linear-gradient(
+      60deg,
+      #c633f7,
+      #f37055,
+      #ef4e7b,
+      #a166ab,
+      #5073b8,
+      #1098ad,
+      #07b39b,
+      #6fba82
+    );
+    border-radius: 10px;
+    z-index: -1;
+    background-size: 400% 400%;
+    filter:blur(10px);
+    -webkit-backdrop-filter: blur(5px); /*fixes blur for Safari*/
+  }
+}
+
+// when user is talking add a gradient animation
+.isTalking {
+  &:after {
+    animation: animatedgradient 3s ease alternate infinite;
   }
 }
 
