@@ -80,7 +80,7 @@ const startSilenceTimer = () => {
   silenceTimeout = setTimeout(() => {
     stopRecording();
     isTalking = false;
-  }, silenceAmount); 
+  }, silenceAmount);
 };
 
 const resetSilenceTimer = () => {
@@ -140,6 +140,8 @@ p {
     z-index: -1;
     background-size: 400% 400%;
     filter:blur(10px);
+    -webkit-backdrop-filter: blur(5px); /*fixes blur for Safari*/
+
   }
 }
 
@@ -153,7 +155,7 @@ input {
   position: relative;
   display: inline-block;
   padding: 20px;
-  width: calc(100% - 132.6px);
+  width: calc(100% - 133px);
   border-radius: 10px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -162,10 +164,11 @@ input {
   &:focus {
     outline: none;
   }
-  
+
 }
 
 button {
+  display: inline-block;
   padding: 20px;
   background-color: #373737fc;
   color: white;
