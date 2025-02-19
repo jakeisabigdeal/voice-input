@@ -104,7 +104,6 @@ $red: #F02D3A;
 $purple: #9191E9;
 $grey: rgb(203, 203, 203);
 $white: #f8f8f8;
-
 $default-transition: 0.5s all ease-in-out;
 
 // main title
