@@ -3,9 +3,9 @@
   <h1>Speech Recognition Demo</h1>
   <p>using webRTC & webkit speech recognition.</p>
 
-  <div class="input-container" :class="{micActive: isMicActive, isTalking: isTalking }">
+  <div class="input-container" :class="{ micActive: isMicActive, isTalking: isTalking }">
     <input v-model="transcript" type="text" placeholder="Say words and they appear here!" />
-    <button @click="toggleRecording">
+    <button @click="toggleRecording" :class="{ btnActive: isMicActive}">
       {{ isRecording ? 'Stop Recording' : 'Start Recording' }}
     </button>
   </div>
@@ -18,9 +18,9 @@ import { ref } from 'vue'
 // variables
 const transcript = ref('');
 const isRecording = ref(false);
+const isMicActive = ref(false);
+const isTalking = ref(false);
 let recognition = null;
-let isMicActive = false;
-let isTalking = false;
 let silenceTimeout = null;
 let silenceAmount = 3000; // 3 seconds
 
@@ -34,8 +34,7 @@ if ('webkitSpeechRecognition' in window) {
 
   // when speech is recognized
   recognition.onresult = (event) => {
-    isTalking = true;
-
+    isTalking.value = true;
     let fullTranscript = '';
     for (let i = 0; i < event.results.length; i++) {
       fullTranscript += event.results[i][0].transcript + ' ';
@@ -46,7 +45,6 @@ if ('webkitSpeechRecognition' in window) {
   // when speech ends start timer to stop recording
   recognition.onspeechend = () => {
     startSilenceTimer();
-    // stopRecording();
   }
 }
 
@@ -64,10 +62,9 @@ const startRecording = () => {
   if (recognition) {
     transcript.value = '';
     isRecording.value = true;
-    isMicActive = true;
+    isMicActive.value = true;
     recognition.start();
     resetSilenceTimer();
-
   }
 }
 
@@ -76,7 +73,7 @@ const stopRecording = () => {
   if (recognition) {
     isRecording.value = false;
     recognition.stop();
-    isMicActive = false;
+    isMicActive.value = false;
     clearTimeout(silenceTimeout);
   }
 }
@@ -86,7 +83,7 @@ const startSilenceTimer = () => {
   clearTimeout(silenceTimeout);
   silenceTimeout = setTimeout(() => {
     stopRecording();
-    isTalking = false;
+    isTalking.value = false;
   }, silenceAmount);
 };
 
@@ -102,15 +99,19 @@ const resetSilenceTimer = () => {
 // variables
 $borderWidth: 3px;
 $black: #222222;
-$green: #21FA90;
+$green: #17af66;
 $red: #F02D3A;
 $purple: #9191E9;
+$grey: rgb(203, 203, 203);
+$white: #f8f8f8;
+
+$default-transition: 0.5s all ease-in-out;
 
 // main title
 h1 {
   text-align: center;
   padding: 40px 0 0 0;
-  color: rgb(203, 203, 203);
+  color: $grey;
 }
 
 // sub title
@@ -145,18 +146,22 @@ p {
   button {
     display: inline-block;
     padding: 20px;
-    background-color: #373737fc;
-    color: white;
+    background-color: $green;
+    color: $white;
     border: none;
     cursor: pointer;
     border-radius: 10px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    transition: 0.5s all ease-in-out;
+    transition: $default-transition;
 
     &:hover {
-      background-color: $green;
-      transition: 0.5s all ease-in-out;
+      background-color: $red;
+      transition: $default-transition;
+    }
+
+    &.btnActive {
+      background-color: $red;
     }
   }
 }
@@ -184,8 +189,9 @@ p {
     border-radius: 10px;
     z-index: -1;
     background-size: 400% 400%;
-    filter:blur(10px);
-    -webkit-backdrop-filter: blur(5px); /*fixes blur for Safari*/
+    filter: blur(10px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* fixes gradient blur for Safari */
   }
 }
 
