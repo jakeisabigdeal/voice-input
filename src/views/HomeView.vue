@@ -95,9 +95,15 @@ const resetSilenceTimer = () => {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
+
+@function pxToRem($px) {
+  @return math.div($px, 16) * 1rem;
+}
 
 // variables
 $borderWidth: 3px;
+$blurAmount: 10px;
 $black: #222222;
 $green: #17af66;
 $red: #F02D3A;
@@ -109,29 +115,29 @@ $default-transition: 0.5s all ease-in-out;
 // main title
 h1 {
   text-align: center;
-  padding: 40px 0 0 0;
+  padding: pxToRem(40) 0 0 0;
   color: $grey;
 }
 
 // sub title
 p {
   text-align: center;
-  padding:  0 0 20px 0;
+  padding:  0 0 pxToRem(20) 0;
 }
 
 // input container
 .input-container {
   display: block;
   position: relative;
-  width: 800px;
+  width: pxToRem(800);
   margin: auto;
   // input to take in the transcript
   input {
     position: relative;
     display: inline-block;
-    padding: 20px;
-    width: calc(100% - 133px);
-    border-radius: 10px;
+    padding: pxToRem(20);
+    width: calc(100% - pxToRem(133));
+    border-radius: pxToRem(10);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border: none;
@@ -144,12 +150,12 @@ p {
   // recording button
   button {
     display: inline-block;
-    padding: 20px;
+    padding: pxToRem(20);
     background-color: $green;
     color: $white;
     border: none;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: pxToRem(10);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     transition: $default-transition;
@@ -185,12 +191,12 @@ p {
       #07b39b,
       #6fba82
     );
-    border-radius: 10px;
+    border-radius: pxToRem(10);
     z-index: -1;
     background-size: 400% 400%;
-    filter: blur(10px);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* fixes gradient blur for Safari */
+    filter: blur($blurAmount);
+    backdrop-filter: blur($blurAmount);
+    -webkit-backdrop-filter: blur($blurAmount); /* fixes gradient blur for Safari */
   }
 }
 
